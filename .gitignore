@@ -1,0 +1,16 @@
+node_modules/
+.next/
+dist/
+*.log
+.env
+.env.local
+.DS_Store
+.vercel
+.netlify
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+coverage/
+.nyc_output/

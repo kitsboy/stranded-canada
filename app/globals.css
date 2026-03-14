@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #1e293b;
+  color: white;
+}
+
+.leaflet-container {
+  background: #1e293b;
+}
+
+.leaflet-popup-content-wrapper {
+  background: #1e293b;
+  color: white;
+  border: 1px solid #334155;
+}
+
+.leaflet-popup-tip {
+  background: #1e293b;
+}
