@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 30, 41, 59;
+  --background-end-rgb: 15, 23, 42;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+    to bottom,
+    rgb(var(--background-start-rgb)),
+    rgb(var(--background-end-rgb))
+  );
+}
+
+.mapboxgl-popup-content {
+  background: rgba(30, 41, 59, 0.95) !important;
+  border: 1px solid #5BC0BE;
+  border-radius: 8px !important;
+  color: white;
+  padding: 16px !important;
+}
+
+.mapboxgl-popup-tip {
+  border-top-color: #5BC0BE !important;
+}
