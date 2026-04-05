@@ -6,7 +6,7 @@
 set -e
 
 echo "🚀 Deploying stranded.giveabit.io..."
-cd /data/.openclaw/workspace/stranded-canada
+
 
 echo "📦 Installing dependencies..."
 npm install
