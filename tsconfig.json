@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "json": true,
   "compilerOptions": {
     "lib": [
@@ -6,6 +7,10 @@
       "dom.iterable",
       "esnext"
     ],
+=======
+  "compilerOptions": {
+    "lib": ["dom", "dom.iterable", "esnext"],
+>>>>>>> origin/local-preservation
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -17,6 +22,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+<<<<<<< HEAD
     "plugins": [
       {
         "name": "next"
@@ -38,4 +44,11 @@
   "exclude": [
     "node_modules"
   ]
+=======
+    "plugins": [ { "name": "next" } ],
+    "paths": { "@/*": ["./*"] }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+>>>>>>> origin/local-preservation
 }

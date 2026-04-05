@@ -1,5 +1,6 @@
 node_modules/
 .next/
+<<<<<<< HEAD
 dist/
 *.log
 .env
@@ -14,3 +15,5 @@ dist/
 .idea/
 coverage/
 .nyc_output/
+=======
+>>>>>>> origin/local-preservation

@@ -1,0 +1,21 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2026-03-08",
+  "dataQuality": "demo",
+  "sites": [
+    {"id":"bc-001","name":"Fort St. John Pipeline Leak","province":"BC","region":"Northeast BC","lat":56.2524,"lng":-120.8471,"emission_kg_day":500,"grid_km":12.5,"internet":"Starlink","complexity":"moderate","type":"pipeline"},
+    {"id":"bc-002","name":"Dawson Creek Gas Facility","province":"BC","region":"Northeast BC","lat":55.7596,"lng":-120.2377,"emission_kg_day":6200,"grid_km":8.2,"internet":"Fiber","complexity":"easy","type":"facility"},
+    {"id":"bc-003","name":"Taylor Gas Plant Vent","province":"BC","region":"Peace River","lat":56.153,"lng":-120.682,"emission_kg_day":3800,"grid_km":6.1,"internet":"Cable","complexity":"easy","type":"vent"},
+    {"id":"ab-001","name":"Hinton Coal Mine Vent","province":"AB","region":"Foothills","lat":53.4091,"lng":-117.5641,"emission_kg_day":850,"grid_km":4.1,"internet":"Cable","complexity":"easy","type":"mine"},
+    {"id":"ab-002","name":"Grande Prairie Wellhead","province":"AB","region":"Peace Country","lat":55.1694,"lng":-118.7981,"emission_kg_day":3200,"grid_km":22.0,"internet":"Starlink","complexity":"moderate","type":"wellhead"},
+    {"id":"ab-003","name":"Medicine Hat Pipeline","province":"AB","region":"Southeast AB","lat":50.0418,"lng":-110.6775,"emission_kg_day":1100,"grid_km":5.5,"internet":"Cable","complexity":"easy","type":"pipeline"},
+    {"id":"sk-001","name":"Estevan Coal Mine","province":"SK","region":"Southeast SK","lat":49.1391,"lng":-102.9864,"emission_kg_day":4400,"grid_km":35.0,"internet":"Starlink","complexity":"hard","type":"mine"},
+    {"id":"sk-002","name":"Weyburn Pipeline Vent","province":"SK","region":"South SK","lat":49.6616,"lng":-103.8525,"emission_kg_day":920,"grid_km":18.0,"internet":"LTE","complexity":"moderate","type":"pipeline"},
+    {"id":"mb-001","name":"Swan River Landfill","province":"MB","region":"Northwest MB","lat":52.1065,"lng":-101.2689,"emission_kg_day":320,"grid_km":2.5,"internet":"Cable","complexity":"easy","type":"landfill"},
+    {"id":"on-001","name":"Sarnia Industrial Zone","province":"ON","region":"Southwest ON","lat":42.9746,"lng":-82.4018,"emission_kg_day":5200,"grid_km":1.2,"internet":"Fiber","complexity":"easy","type":"industrial"},
+    {"id":"qc-001","name":"Thetford Mines Vent","province":"QC","region":"Chaudière-Appalaches","lat":46.096,"lng":-71.292,"emission_kg_day":730,"grid_km":7.0,"internet":"Cable","complexity":"moderate","type":"mine"},
+    {"id":"ns-001","name":"Stellarton Coal Mine","province":"NS","region":"Pictou County","lat":45.556,"lng":-62.656,"emission_kg_day":390,"grid_km":6.0,"internet":"Cable","complexity":"easy","type":"mine"},
+    {"id":"nl-001","name":"Labrador Iron Ore Vent","province":"NL","region":"Labrador","lat":52.933,"lng":-66.9,"emission_kg_day":1800,"grid_km":80.0,"internet":"Starlink","complexity":"hard","type":"mine"},
+    {"id":"yt-001","name":"Whitehorse Gold Mine","province":"YT","region":"Central Yukon","lat":60.720,"lng":-135.056,"emission_kg_day":640,"grid_km":45.0,"internet":"Starlink","complexity":"hard","type":"mine"}
+  ]
+}
