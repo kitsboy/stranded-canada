@@ -1,10 +1,1 @@
-module.exports = {
-  plugins: {
-    tailwindcss: {},
-    autoprefixer: {},
-  },
-<<<<<<< HEAD
-};
-=======
-}
->>>>>>> origin/local-preservation
+module.exports = { plugins: { tailwindcss: {}, autoprefixer: {} } };

@@ -29,7 +29,6 @@ export default function Map({ layers, onSiteClick }: MapProps) {
   useEffect(() => {
     const loadLeaflet = async () => {
       const L = await import('leaflet')
-      await import('leaflet/dist/leaflet.css')
       LRef.current = L
       
       // Fix markers
@@ -81,7 +80,7 @@ export default function Map({ layers, onSiteClick }: MapProps) {
     sitesData.forEach((site) => {
       const [lng, lat] = site.geometry.coordinates
       const props = site.properties
-      const emission = props.emission_rate_kg_day || (props.ch4_tonnes_year * 1000 / 365) || 100
+      const emission = props.emission_rate_kg_day || ((props.ch4_tonnes_year || 0) * 1000 / 365) || 100
       
       const size = emission >= 5000 ? 20 : emission >= 2000 ? 16 : emission >= 500 ? 12 : 8
       

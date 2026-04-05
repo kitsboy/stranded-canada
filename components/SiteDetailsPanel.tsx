@@ -27,61 +27,61 @@ export default function SiteDetailsPanel({ site, onClose }: SiteDetailsPanelProp
       <div className="space-y-3 text-sm">
         <div className="flex justify-between">
           <span className="text-gray-400">Location</span>
-          <span className="text-white">{p.location}</span>
+          <span className="text-white">{p.city || p.region || "Unknown"}</span>
         </div>
         
         <div className="flex justify-between">
           <span className="text-gray-400">Source Type</span>
-          <span className="text-white capitalize">{p.sourceType.replace('_', ' ')}</span>
+          <span className="text-white capitalize">{p.source_type?.replace('_', ' ') || 'Unknown'}</span>
         </div>
         
         <div className="flex justify-between">
           <span className="text-gray-400">CH₄ Emissions</span>
           <span className="text-[#FF8C00] font-semibold">
-            {p.emissionRateKgCH4PerDay.toLocaleString()} kg/day
+            {(p.emission_rate_kg_day || 0).toLocaleString()} kg/day
           </span>
         </div>
         
         <div className="flex justify-between">
           <span className="text-gray-400">CO₂e (Yearly)</span>
-          <span className="text-white">{p.co2eTonnesPerYear.toLocaleString()} tonnes</span>
+          <span className="text-white">{(p.co2e_tons_year || 0).toLocaleString()} tonnes</span>
         </div>
         
         <div className="flex justify-between">
           <span className="text-gray-400">Grid Distance</span>
-          <span className="text-white">{p.distanceToGridKm} km</span>
+          <span className="text-white">{p.distance_to_grid_km || 0} km</span>
         </div>
         
         <div className="flex justify-between">
           <span className="text-gray-400">Internet</span>
-          <span className="text-white">{p.internetType}</span>
+          <span className="text-white">{p.internet_type || 'Unknown'}</span>
         </div>
         
         <div className="pt-3 border-t border-[#5BC0BE]/20">
           <div className="flex justify-between mb-2">
             <span className="text-gray-400">Complexity</span>
             <span className={`font-semibold ${
-              p.miningComplexity === 'Easy' ? 'text-green-400' :
-              p.miningComplexity === 'Moderate' ? 'text-yellow-400' :
+              p.complexity_score === 'easy' ? 'text-green-400' :
+              p.complexity_score === 'moderate' ? 'text-yellow-400' :
               'text-red-400'
             }`}>
-              {p.miningComplexity}
+              {p.complexity_score || 'Unknown'}
             </span>
           </div>
           
           <div className="flex justify-between">
             <span className="text-gray-400">Approach</span>
-            <span className="text-[#5BC0BE]">{p.recommendedApproach}</span>
+            <span className="text-[#5BC0BE]">{p.recommended_approach || 'Standard'}</span>
           </div>
         </div>
         
         <div className="pt-3 border-t border-[#5BC0BE]/20">
           <span className={`inline-flex items-center px-2 py-1 rounded text-xs ${
-            p.dataType === 'verified' 
+            p.confidence === 'high' 
               ? 'bg-[#5BC0BE]/20 text-[#5BC0BE]' 
               : 'bg-gray-700 text-gray-400'
           }`}>
-            {p.dataType === 'verified' ? '✓ Verified Data' : 'Demo Data'}
+            {p.confidence === 'high' ? '✓ Verified Data' : 'Demo Data'}
           </span>
         </div>
       </div>
