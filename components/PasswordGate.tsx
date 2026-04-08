@@ -36,7 +36,7 @@ export default function PasswordGate({ children }: PasswordGateProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     // Simple password protection - in production, use proper authentication
-    if (password === 'stranded2024') {
+    if (password === 'btcg1ves2026') {
       Cookies.set('stranded-auth', 'true', { expires: 7 })
       setIsAuthenticated(true)
       setError('')

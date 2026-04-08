@@ -1,131 +1,55 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
-import type { StrandedSite } from '@/types/site'
+import { useEffect, useRef } from 'react'
+import maplibregl from 'maplibre-gl'
+import 'maplibre-gl/dist/maplibre-gl.css'
 
-interface MapProps {
-  layers: {
-    sites: boolean
-    grid: boolean
-    internet: boolean
-  }
-  onSiteClick: (site: StrandedSite) => void
-}
+export default function Map() {
+  const mapContainer = useRef<HTMLDivElement>(null)
+  const map = useRef<any>(null)
 
-// Canadian bounds
-const canadaBounds: [[number, number], [number, number]] = [
-  [41.0, -141.0],
-  [83.0, -52.0]
-]
+  useEffect(() => {
+    if (!mapContainer.current || map.current) return
 
-export default function Map({ layers, onSiteClick }: MapProps) {
-  const mapRef = useRef<any>(null)
-  const LRef = useRef<any>(null)
-  const layersRef = useRef<{sites: any, grid: any, internet: any}>({sites: null, grid: null, internet: null})
-  const [isClient, setIsClient] = useState(false)
-  const [sitesData, setSitesData] = useState<StrandedSite[]>([])
-  
-  // Load Leaflet dynamically
-  useEffect(() => {
-    const loadLeaflet = async () => {
-      const L = await import('leaflet')
-      LRef.current = L
-      
-      // Fix markers
-      delete (L.Icon.Default.prototype as any)._getIconUrl
-      L.Icon.Default.mergeOptions({
-        iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png',
-        iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png',
-        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
-      })
-      
-      setIsClient(true)
-    }
-    loadLeaflet()
-  }, [])
-  
-  // Fetch sites
-  useEffect(() => {
-    fetch('/data/stranded-sites.geojson')
-      .then(res => res.json())
-      .then(data => setSitesData(data.features || []))
-  }, [])
-  
-  // Initialize map when Leaflet loaded
-  useEffect(() => {
-    if (!isClient || !LRef.current || sitesData.length === 0) return
-    
-    const L = LRef.current
-    
-    const map = L.map('map', {
-      center: [55, -95],
-      zoom: 4,
-      minZoom: 3,
-      maxBounds: canadaBounds,
-      maxBoundsViscosity: 0.5,
+    map.current = new maplibregl.Map({
+      container: mapContainer.current,
+      style: {
+        version: 8,
+        sources: {
+          'osm': { type: 'raster', tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'], tileSize: 256 }
+        },
+        layers: [{ id: 'osm', type: 'raster', source: 'osm' }]
+      },
+      center: [-95, 55],
+      zoom: 3
     })
-    
-    mapRef.current = map
-    
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap',
-      maxZoom: 19,
-    }).addTo(map)
-    
-    layersRef.current.sites = L.layerGroup().addTo(map)
-    layersRef.current.grid = L.layerGroup().addTo(map)
-    layersRef.current.internet = L.layerGroup().addTo(map)
-    
-    // Add sites
-    sitesData.forEach((site) => {
-      const [lng, lat] = site.geometry.coordinates
-      const props = site.properties
-      const emission = props.emission_rate_kg_day || ((props.ch4_tonnes_year || 0) * 1000 / 365) || 100
-      
-      const size = emission >= 5000 ? 20 : emission >= 2000 ? 16 : emission >= 500 ? 12 : 8
-      
-      const marker = L.circleMarker([lat, lng], {
-        radius: size,
-        fillColor: props.source_type?.includes('oil') ? '#FF8C00' : 
-                   props.source_type?.includes('landfill') ? '#22C55E' : '#5BC0BE',
-        color: '#fff',
-        weight: 1,
-        fillOpacity: 0.8,
-      })
-      
-      marker.on('click', () => onSiteClick(site))
-      marker.bindTooltip(
-        `<strong>${props.name}</strong><br/>
-         ${props.company || 'Unknown'}<br/>
-         ${Math.round(emission).toLocaleString()} kg CH₄/day`,
-        { direction: 'top', offset: [0, -10] }
-      )
-      
-      layersRef.current.sites.addLayer(marker)
+
+    map.current.on('load', () => {
+      fetch('/data/stranded-sites.geojson')
+        .then(r => r.json())
+        .then(data => {
+          data.features.forEach((site: any) => {
+            const emission = site.properties.emission_rate_kg_day || 100
+            const size = emission > 3000 ? 14 : emission > 1000 ? 10 : 6
+            const el = document.createElement('div')
+            el.style.width = size + 'px'
+            el.style.height = size + 'px'
+            el.style.borderRadius = '50%'
+            el.style.background = '#FF8C00'
+            el.style.border = '2px solid white'
+            el.style.boxShadow = '0 0 4px rgba(0,0,0,0.5)'
+            el.style.cursor = 'pointer'
+            el.addEventListener('click', function() {
+              const w = window as any
+              if (w._selectSite) w._selectSite(site)
+            })
+            new maplibregl.Marker({element: el}).setLngLat(site.geometry.coordinates).addTo(map.current)
+          })
+        })
     })
-    
-    return () => { map.remove() }
-  }, [isClient, sitesData, onSiteClick])
-  
-  // Toggle layers
-  useEffect(() => {
-    if (!mapRef.current) return
-    const map = mapRef.current
-    
-    if (layers.sites) map.addLayer(layersRef.current.sites)
-    else map.removeLayer(layersRef.current.sites)
-    
-    if (layers.grid) map.addLayer(layersRef.current.grid)
-    else map.removeLayer(layersRef.current.grid)
-  }, [layers])
-  
-  if (!isClient) {
-    return (
-      <div className="w-full h-full bg-[#1e293b] flex items-center justify-center text-[#5BC0BE]">
-        <div>🌿 Loading 2,611 sites...</div>
-      </div>
-    )
-  }
-  
-  return <div id="map" className="w-full h-full" style={{height: '100vh', width: '100%'}} />
+
+    return () => { if (map.current) { map.current.remove(); map.current = null } }
+  }, [])
+
+  return <div ref={mapContainer} className="w-full h-full" />
 }

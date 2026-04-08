@@ -2,3 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+
+/* Fix marker clickability */
+.maplibregl-canvas {
+  pointer-events: none !important;
+}
+.maplibregl-marker {
+  pointer-events: auto !important;
+  z-index: 10 !important;
+}
