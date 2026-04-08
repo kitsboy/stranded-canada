@@ -15,6 +15,6 @@ echo "🔨 Building..."
 npm run build
 
 echo "📤 Deploying to Cloudflare Pages..."
-wrangler pages deploy ./out --project-name=stranded-canada
+wrangler pages deploy ./dist --project-name=stranded-canada
 
 echo "✅ Deployed!"
